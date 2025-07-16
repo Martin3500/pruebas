@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+<form   name="contact"  method="POST"  data-netlify="true"
+  data-netlify-recaptcha="true"
+  id="contact-form"
+  netlify-honeypot="bot-field">
+  <!-- Campo oculto para evitar spam -->
+  <input type="hidden" name="form-name" value="contact" />
+  <p hidden>
+    <label>No rellenar este campo: <input name="bot-field" /></label>
+  </p>
+  
+  <p>
+    <label>Tu Nombre:<br>
+      <input type="text" name="nombre" required>
+    </label>
+  </p>
+  
+  <p>
+    <label>Tu Email:<br>
+      <input type="email" name="email" required>
+    </label>
+  </p>
+  
+  <p>
+    <label>Mensaje:<br>
+      <textarea name="mensaje" required></textarea>
+    </label>
+  </p>
+  
+  <p>
+    <button type="submit">Enviar</button>
+  </p>
+</form>
+
+<div id="form-message" style="display:none;">¡Gracias! Tu mensaje ha sido enviado.</div>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const message = document.getElementById('form-message');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const data = new FormData(form);
+    fetch("/", {
+      method: "POST",
+      body: data
+    })
+    .then(() => {
+      form.style.display = "none";
+      message.style.display = "block";
+    })
+    .catch((error) => alert(error));
+  });
+</script>
+
+</body>
+
+</html>
